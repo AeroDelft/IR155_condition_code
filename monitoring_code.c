@@ -1,4 +1,4 @@
-const int pwmPin = 2; //Replace pin number with actual pin on the Arduino
+const int pwmPin = 3; //Replace pin number with actual pin on the Arduino
 
 void setup() {
   Serial.begin(9600); //Set 9600 baud for serial communication to the computer
@@ -23,7 +23,7 @@ void loop() {
   //Calculate the insulation resistance in kOhms
   float resistanceFloating = ((90.0 * 1200.0)/(dutyCycle - 5.0));
   
-  if (frequency != prevFrequency) {ss
+  if (frequency != prevFrequency) {
     Serial.print("Frequency (Hz): ");
     Serial.println(frequency);
     Serial.print("Duty Cycle (%): ");
@@ -31,7 +31,7 @@ void loop() {
     
     // Condition 1: Normal operation (10 Hz)
     if (abs(frequency - 10) <= (0.1*10)) {
-      if (dutyCycle >= 5.0 && dutyCycle <= 95.0) {
+      if (dutyCycle >= 4.5 && dutyCycle <= 95.5) {
         Serial.println("Normal condition");
         Serial.print("Insulation resistance (kOhm): ");
         Serial.println(resistanceFloating);
@@ -42,23 +42,23 @@ void loop() {
     }
     // Condition 2: Undervoltage detected (20 Hz)
     else if (abs(frequency - 20) <= (0.1*20)) {
-      if (dutyCycle >= 5.0 && dutyCycle <= 95.0) {
+      if (dutyCycle >= 4.5 && dutyCycle <= 95.5) {
         Serial.println("Undervoltage detected");
         Serial.print("Insulation resistance (kOhm): ");
         Serial.println(resistanceFloating);
       }
       else {
-        Serial.println("Outisde working PWM duty cycle range")
+        Serial.println("Outisde working PWM duty cycle range");
       }
     }
     //Condition 3: Speed start measurement (30 Hz)
     else if (abs(frequency - 30) <= (0.1*30)) {
-      if (dutyCycle >= 5.0 && dutyCycle <= 10.0) {
+      if (dutyCycle >= 4.5 && dutyCycle <= 10.5) {
         Serial.println("Good");
         Serial.print("Insulation resistance (kOhm): ");
         Serial.println(resistanceFloating);
       }
-      else if (dutyCycle >= 90.0 && dutyCycle <= 95.0) {
+      else if (dutyCycle >= 89.5 && dutyCycle <= 95.5) {
         Serial.println("Bad");
         Serial.print("Insulation resistance (kOhm): ");
         Serial.println(resistanceFloating);
@@ -69,7 +69,7 @@ void loop() {
     }
     //Condition 4: Device error (40 Hz)
     else if (abs(frequency - 40) <= (0.1*40)) {
-      if (dutyCycle >= 47.5 && dutyCycle <= 52.5) {
+      if (dutyCycle >= 47.0 && dutyCycle <= 53.0) {
         Serial.println("Device error detected");
         Serial.print("Insulation resistance (kOhm): ");
         Serial.println(resistanceFloating);
@@ -80,7 +80,7 @@ void loop() {
     }
     //Condition 5: Connection fault earth (50 Hz)
     else if (abs(frequency - 50) <= (0.1*50)) {
-      if (dutyCycle >= 47.5 && dutyCycle <= 52.5) {
+      if (dutyCycle >= 47.0 && dutyCycle <= 53.0) {
         Serial.println("Connection fault earth");
       }
       else {
