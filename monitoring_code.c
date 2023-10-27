@@ -29,8 +29,20 @@ void loop() {
     Serial.print("Duty Cycle (%): ");
     Serial.println(dutyCycle);
     
+    //Condition 0: No PWM signal (0 Hz)
+    if (dutyCycle > 100.5) {
+      int pinState = digitalRead(pwmPin);
+      Serial.print("IR155 is");
+      if (pinState == HIGH) {
+        Serial.println("short-circuited to supply voltage");
+      }
+      else {
+        Serial.prinln("off or short-circuit to testbed ground");
+      }
+    }
+    
     // Condition 1: Normal operation (10 Hz)
-    if (abs(frequency - 10) <= (0.1*10)) {
+    else if (abs(frequency - 10) <= (0.1*10)) {
       if (dutyCycle >= 4.5 && dutyCycle <= 95.5) {
         Serial.println("Normal condition");
         Serial.print("Insulation resistance (kOhm): ");
