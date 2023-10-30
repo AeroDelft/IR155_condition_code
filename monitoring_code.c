@@ -30,7 +30,7 @@ void loop() {
     Serial.println(dutyCycle);
     
     //Condition 0: No PWM signal (0 Hz)
-    if (dutyCycle > 100.5) {
+    if (frequency > 100.5) {
       int pinState = digitalRead(pwmPin);
       Serial.print("IR155 is");
       if (pinState == HIGH) {
