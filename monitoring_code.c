@@ -28,16 +28,18 @@ void loop() {
     Serial.println(frequency);
     Serial.print("Duty Cycle (%): ");
     Serial.println(dutyCycle);
+  
+  delay(1500); //Change value depending on how often you want to display measurements
     
     //Condition 0: No PWM signal (0 Hz)
     if (frequency > 100.5) {
       int pinState = digitalRead(pwmPin);
-      Serial.print("IR155 is");
+      Serial.print("IR155 is ");
       if (pinState == HIGH) {
         Serial.println("short-circuited to supply voltage");
       }
       else {
-        Serial.prinln("off or short-circuit to testbed ground");
+        Serial.println("off or short-circuit to testbed ground");
       }
     }
     
